@@ -482,6 +482,8 @@ function TWT.init()
     --     TWT_CONFIG.tankMode = false
     -- end
 
+    TWT_CONFIG.showPullAggro = TWT_CONFIG.showPullAggro ~= false
+    TWT_CONFIG.classColorTitlebars = TWT_CONFIG.classColorTitlebars or false
     TWT_CONFIG.debug = TWT_CONFIG.debug or false
     TWT_CONFIG.units = TWT_CONFIG.units or {}
     TWT.units = TWT_CONFIG.units
@@ -531,10 +533,12 @@ function TWT.init()
     _G['TWTMainSettingsFullScreenGlow']:SetChecked(TWT_CONFIG.fullScreenGlow)
     _G['TWTMainSettingsAggroSound']:SetChecked(TWT_CONFIG.aggroSound)
     _G['TWTMainSettingsTankMode']:SetChecked(TWT_CONFIG.tankMode)
+    _G['TWTMainSettingsClassColorTitlebars']:SetChecked(TWT_CONFIG.classColorTitlebars)
 
     _G['TWTMainSettingsColumnsTPS']:SetChecked(TWT_CONFIG.colTPS)
     _G['TWTMainSettingsColumnsThreat']:SetChecked(TWT_CONFIG.colThreat)
     _G['TWTMainSettingsColumnsPercent']:SetChecked(TWT_CONFIG.colPerc)
+    _G['TWTMainSettingsShowPullAggro']:SetChecked(TWT_CONFIG.showPullAggro)
 
     _G['TWTMainSettingsLabelRow']:SetChecked(TWT_CONFIG.labelRow)
 
@@ -553,11 +557,7 @@ function TWT.init()
 
     _G['TWTMainSettingsFontButtonNT']:SetVertexColor(0.4, 0.4, 0.4)
 
-    local color = TWT.classColors[TWT.class]
-
-    _G['TWTMainTitleBG']:SetVertexColor(color.r, color.g, color.b)
-    _G['TWTMainSettingsTitleBG']:SetVertexColor(color.r, color.g, color.b)
-    _G['TWTMainTankModeWindowTitleBG']:SetVertexColor(color.r, color.g, color.b)
+    TWT.updateTitlebarColors()
 
     _G['TWThreatDisplayTarget']:SetScale(UIParent:GetScale())
 
@@ -627,19 +627,36 @@ function TWT.init()
     return true
 end
 
+function TWT.updateTitlebarColors()
+    local r, g, b = 0, 0, 0
+    if TWT_CONFIG.classColorTitlebars then
+        local color = TWT.classColors[TWT.class]
+        r, g, b = color.r, color.g, color.b
+    end
+
+    _G['TWTMainTitleBG']:SetVertexColor(r, g, b)
+    _G['TWTMainSettingsTitleBG']:SetVertexColor(r, g, b)
+    _G['TWTMainTankModeWindowTitleBG']:SetVertexColor(r, g, b)
+end
+
 function TWT.updateSettingsTabs(tab)
-    local color = TWT.classColors[TWT.class]
-    _G['TWTMainSettingsTabsUnderline']:SetVertexColor(color.r, color.g, color.b)
+    local r, g, b = 0, 0, 0
+    if TWT_CONFIG.classColorTitlebars then
+        local color = TWT.classColors[TWT.class]
+        r, g, b = color.r, color.g, color.b
+    end
+
+    _G['TWTMainSettingsTabsUnderline']:SetVertexColor(r, g, b)
 
     for i = 1, 3 do
         _G['TWTMainSettingsTab' .. i]:Hide()
-        _G['TWTMainSettingsTab' .. i .. 'ButtonNT']:SetVertexColor(color.r, color.g, color.b, 0.4)
-        _G['TWTMainSettingsTab' .. i .. 'ButtonHT']:SetVertexColor(color.r, color.g, color.b, 0.4)
-        _G['TWTMainSettingsTab' .. i .. 'ButtonPT']:SetVertexColor(color.r, color.g, color.b, 0.4)
+        _G['TWTMainSettingsTab' .. i .. 'ButtonNT']:SetVertexColor(r, g, b, 0.4)
+        _G['TWTMainSettingsTab' .. i .. 'ButtonHT']:SetVertexColor(r + 0.2, g + 0.2, b + 0.2, 0.4)
+        _G['TWTMainSettingsTab' .. i .. 'ButtonPT']:SetVertexColor(r, g, b, 0.4)
         _G['TWTMainSettingsTab' .. i .. 'ButtonText']:SetTextColor(0.4, 0.4, 0.4)
     end
 
-    _G['TWTMainSettingsTab' .. tab .. 'ButtonNT']:SetVertexColor(color.r, color.g, color.b, 1)
+    _G['TWTMainSettingsTab' .. tab .. 'ButtonNT']:SetVertexColor(r, g, b, 1)
     _G['TWTMainSettingsTab' .. tab .. 'ButtonText']:SetTextColor(1, 1, 1)
 
     _G['TWTMainSettingsTab' .. tab]:Show()
@@ -861,6 +878,12 @@ function TWT.handleTankModePacket(packet)
 end
 
 function TWT.calcAGROPerc()
+
+    -- Remove AGRO bar if setting is disabled
+    if not TWT_CONFIG.showPullAggro then
+        TWT.threats[TWT.AGRO] = nil
+        return
+    end
 
     local tankThreat = 0
     for _, data in next, TWT.threats do
@@ -1861,6 +1884,11 @@ function TWTChangeSetting_OnClick(checked, code)
     if code == 'percPFUIbottom' then
         TWT_CONFIG.percPFUItop = false
         _G['TWTMainSettingsPercNumbersPFUItop']:SetChecked(TWT_CONFIG.percPFUItop)
+    end
+
+    if code == 'classColorTitlebars' then
+        TWT.updateTitlebarColors()
+        TWT.updateSettingsTabs(1)
     end
 
     TWT.setColumnLabels()

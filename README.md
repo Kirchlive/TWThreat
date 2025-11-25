@@ -1,9 +1,13 @@
-# TWThreat v1.3.0
+# TWThreat v1.3.1
 Threat Meter for Turtle WoW
 <br>
 Requirements: in `party` or `raid`, attacking `elite` creatures or `bosses`.
 <br>
 ## Changes
+
+### 1.3.1
+- Added toggle option for Pull Aggro bar in Settings > Bars ("Show Pull Aggro Bar")
+- Added toggle option for class color title bars in Settings > General ("Classcolor for Titlebars")
 
 ### 1.3.0
 - Resistant to losing threat display if an addon is interfering with your targeting.
