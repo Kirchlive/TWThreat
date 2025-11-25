@@ -482,6 +482,7 @@ function TWT.init()
     --     TWT_CONFIG.tankMode = false
     -- end
 
+    TWT_CONFIG.showPullAggro = TWT_CONFIG.showPullAggro ~= false
     TWT_CONFIG.debug = TWT_CONFIG.debug or false
     TWT_CONFIG.units = TWT_CONFIG.units or {}
     TWT.units = TWT_CONFIG.units
@@ -535,6 +536,7 @@ function TWT.init()
     _G['TWTMainSettingsColumnsTPS']:SetChecked(TWT_CONFIG.colTPS)
     _G['TWTMainSettingsColumnsThreat']:SetChecked(TWT_CONFIG.colThreat)
     _G['TWTMainSettingsColumnsPercent']:SetChecked(TWT_CONFIG.colPerc)
+    _G['TWTMainSettingsShowPullAggro']:SetChecked(TWT_CONFIG.showPullAggro)
 
     _G['TWTMainSettingsLabelRow']:SetChecked(TWT_CONFIG.labelRow)
 
@@ -861,6 +863,12 @@ function TWT.handleTankModePacket(packet)
 end
 
 function TWT.calcAGROPerc()
+
+    -- Remove AGRO bar if setting is disabled
+    if not TWT_CONFIG.showPullAggro then
+        TWT.threats[TWT.AGRO] = nil
+        return
+    end
 
     local tankThreat = 0
     for _, data in next, TWT.threats do
