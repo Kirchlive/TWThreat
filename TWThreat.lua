@@ -637,6 +637,17 @@ function TWT.updateTitlebarColors()
     _G['TWTMainTitleBG']:SetVertexColor(r, g, b)
     _G['TWTMainSettingsTitleBG']:SetVertexColor(r, g, b)
     _G['TWTMainTankModeWindowTitleBG']:SetVertexColor(r, g, b)
+
+    -- Set button colors: white when titlebar is black, black when titlebar has class color
+    local btnR, btnG, btnB = 1, 1, 1
+    if TWT_CONFIG.classColorTitlebars then
+        btnR, btnG, btnB = 0, 0, 0
+    end
+    _G['TWTMainSettingsButtonNT']:SetVertexColor(btnR, btnG, btnB)
+    _G['TWTMainLockButtonNT']:SetVertexColor(btnR, btnG, btnB)
+    _G['TWTMainCloseButtonNT']:SetVertexColor(btnR, btnG, btnB)
+    _G['TWTMainSettingsCloseButtonNT']:SetVertexColor(btnR, btnG, btnB)
+    _G['TWTMainTankModeWindowCloseButtonNT']:SetVertexColor(btnR, btnG, btnB)
 end
 
 function TWT.updateSettingsTabs(tab)
@@ -2079,6 +2090,11 @@ function TWT.testBars(show)
                 history = {}, melee = false, tank = false
             }
         }
+
+        -- Remove AGRO bar from test data if showPullAggro is disabled
+        if not TWT_CONFIG.showPullAggro then
+            TWT.threats[TWT.AGRO] = nil
+        end
 
         TWT.tankModeThreats = {
             [1] = {

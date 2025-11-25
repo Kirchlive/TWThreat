@@ -482,7 +482,7 @@
         <Frames>
 
             <Button name="$parentSettingsButton" inherits="UIPanelButtonTemplate" text="">
-                <NormalTexture file="Interface\addons\TWThreat\images\icon_cog"/>
+                <NormalTexture name="$parentNT" file="Interface\addons\TWThreat\images\icon_cog"/>
                 <PushedTexture/>
                 <Size>
                     <AbsDimension x="16" y="16"/>
@@ -540,7 +540,7 @@
             </Button>
 
             <Button name="$parentCloseButton" inherits="UIPanelButtonTemplate" text="">
-                <NormalTexture file="Interface\addons\TWThreat\images\icon_x"/>
+                <NormalTexture name="$parentNT" file="Interface\addons\TWThreat\images\icon_x"/>
                 <PushedTexture/>
                 <Size>
                     <AbsDimension x="16" y="16"/>
@@ -662,7 +662,7 @@
         <Frames>
 
             <Button name="$parentCloseButton" inherits="UIPanelButtonTemplate" text="">
-                <NormalTexture file="Interface\addons\TWThreat\images\icon_x"/>
+                <NormalTexture name="$parentNT" file="Interface\addons\TWThreat\images\icon_x"/>
                 <PushedTexture/>
                 <Size>
                     <AbsDimension x="16" y="16"/>
@@ -924,7 +924,7 @@
                         <Anchors>
                             <Anchor point="TOPLEFT">
                                 <Offset>
-                                    <AbsDimension x="10" y="-135"/>
+                                    <AbsDimension x="10" y="-130"/>
                                 </Offset>
                             </Anchor>
                         </Anchors>
@@ -2148,7 +2148,7 @@
         <Frames>
 
             <Button name="$parentCloseButton" inherits="UIPanelButtonTemplate" text="">
-                <NormalTexture file="Interface\addons\TWThreat\images\icon_x"/>
+                <NormalTexture name="$parentNT" file="Interface\addons\TWThreat\images\icon_x"/>
                 <PushedTexture/>
                 <Size>
                     <AbsDimension x="16" y="16"/>
