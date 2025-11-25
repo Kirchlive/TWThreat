@@ -555,11 +555,9 @@ function TWT.init()
 
     _G['TWTMainSettingsFontButtonNT']:SetVertexColor(0.4, 0.4, 0.4)
 
-    local color = TWT.classColors[TWT.class]
-
-    _G['TWTMainTitleBG']:SetVertexColor(color.r, color.g, color.b)
-    _G['TWTMainSettingsTitleBG']:SetVertexColor(color.r, color.g, color.b)
-    _G['TWTMainTankModeWindowTitleBG']:SetVertexColor(color.r, color.g, color.b)
+    _G['TWTMainTitleBG']:SetVertexColor(0, 0, 0)
+    _G['TWTMainSettingsTitleBG']:SetVertexColor(0, 0, 0)
+    _G['TWTMainTankModeWindowTitleBG']:SetVertexColor(0, 0, 0)
 
     _G['TWThreatDisplayTarget']:SetScale(UIParent:GetScale())
 
@@ -630,18 +628,17 @@ function TWT.init()
 end
 
 function TWT.updateSettingsTabs(tab)
-    local color = TWT.classColors[TWT.class]
-    _G['TWTMainSettingsTabsUnderline']:SetVertexColor(color.r, color.g, color.b)
+    _G['TWTMainSettingsTabsUnderline']:SetVertexColor(0, 0, 0)
 
     for i = 1, 3 do
         _G['TWTMainSettingsTab' .. i]:Hide()
-        _G['TWTMainSettingsTab' .. i .. 'ButtonNT']:SetVertexColor(color.r, color.g, color.b, 0.4)
-        _G['TWTMainSettingsTab' .. i .. 'ButtonHT']:SetVertexColor(color.r, color.g, color.b, 0.4)
-        _G['TWTMainSettingsTab' .. i .. 'ButtonPT']:SetVertexColor(color.r, color.g, color.b, 0.4)
+        _G['TWTMainSettingsTab' .. i .. 'ButtonNT']:SetVertexColor(0, 0, 0, 0.4)
+        _G['TWTMainSettingsTab' .. i .. 'ButtonHT']:SetVertexColor(0.2, 0.2, 0.2, 0.4)
+        _G['TWTMainSettingsTab' .. i .. 'ButtonPT']:SetVertexColor(0, 0, 0, 0.4)
         _G['TWTMainSettingsTab' .. i .. 'ButtonText']:SetTextColor(0.4, 0.4, 0.4)
     end
 
-    _G['TWTMainSettingsTab' .. tab .. 'ButtonNT']:SetVertexColor(color.r, color.g, color.b, 1)
+    _G['TWTMainSettingsTab' .. tab .. 'ButtonNT']:SetVertexColor(0, 0, 0, 1)
     _G['TWTMainSettingsTab' .. tab .. 'ButtonText']:SetTextColor(1, 1, 1)
 
     _G['TWTMainSettingsTab' .. tab]:Show()
